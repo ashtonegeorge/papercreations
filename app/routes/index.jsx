@@ -3,8 +3,8 @@ import {Image} from '@shopify/hydrogen';
 
 export const meta = () => {
   return {
-    title: "Hydrogen",
-    description: "A custom storefront powered by Hydrogen",
+    title: 'Paper Creations by Stacey',
+    description: 'A custom storefront powered by Hydrogen',
   };
 };
 
@@ -14,7 +14,6 @@ export async function loader({context}) {
 
 export default function Index() {
   const {collections} = useLoaderData();
-  console.log(collections);
   return (
     <section className="w-full gap-4">
       <h2 className="whitespace-pre-wrap max-w-prose font-bold text-lead">
