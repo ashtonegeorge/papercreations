@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       fontFamily: {
         amatic: ['Amatic SC', 'sans-serif'],
+        cormorant: ['Cormorant Garamond', 'serif'],
       },
     },
   },
