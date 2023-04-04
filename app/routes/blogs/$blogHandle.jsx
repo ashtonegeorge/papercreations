@@ -1,9 +1,10 @@
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
+import ArticleGrid from '../../components/ArticleGrid';
 
 const seo = ({data}) => ({
-  title: data?.collection?.title,
-  description: data?.collection?.description,
+  title: data?.article?.title,
+  description: data?.article?.excerpt,
 });
 
 export const handle = {
@@ -11,75 +12,90 @@ export const handle = {
 };
 
 export async function loader({params, context, request}) {
-  const {handle} = params;
+  const blogHandle = params.blogHandle;
   const searchParams = new URL(request.url).searchParams;
   const cursor = searchParams.get('cursor');
 
-  const {article} = await context.storefront.query(ARTICLE_QUERY, {
+  const {blog} = await context.storefront.query(BLOG_QUERY, {
     variables: {
-      handle,
+      blogHandle,
       cursor,
     },
   });
 
   // Handle 404s
-  if (!article) {
+  if (!blog) {
     throw new Response(null, {status: 404});
   }
 
   // json is a Remix utility for creating application/json responses
   // https://remix.run/docs/en/v1/utils/json
   return json({
-    article,
+    blog,
   });
 }
 
 export const meta = ({data}) => {
   return {
-    title: data?.collection?.title ?? 'Collection',
-    description: data?.collection?.description,
+    title: data?.blog?.title ?? 'Article',
+    description: data?.blog?.authors.name,
   };
 };
 
-export default function Collection() {
-  const {collection} = useLoaderData();
+export default function Blog() {
+  const {blog} = useLoaderData();
   return (
     <>
       <header className="grid w-full gap-8 py-8 justify-items-start">
         <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
-          {collection.title}
+          {blog.title}
         </h1>
 
-        {collection.description && (
+        {/* {collection.description && (
           <div className="flex items-baseline justify-between w-full">
             <div>
               <p className="max-w-md whitespace-pre-wrap inherit text-copy inline-block">
-                {collection.description}
+                {blog.authors.name}
               </p>
             </div>
           </div>
-        )}
+        )} */}
       </header>
+      <ArticleGrid blog={blog} url={`/blogs/${blog.handle}`} />
     </>
   );
 }
 
-const ARTICLE_QUERY = `#graphql
-  query ArticleDetails($id: String!) {
-    articles(id: $id) {
-      nodes {
+const BLOG_QUERY = `#graphql
+  query BlogArticles($blogHandle: String!, $cursor: String) {
+  blog(handle: $blogHandle) {
+    title
+    id
+    authors {
+      name
+    }
+    articles(first: 6, after: $cursor) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
         id
-        handle
-        content
-        title
+        publishedAt
         excerpt
+        title
+        handle
         authorV2 {
           name
         }
         image {
           url
         }
+        blog {
+          handle
+        }
       }
     }
   }
+}
 `;

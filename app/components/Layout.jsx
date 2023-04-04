@@ -2,6 +2,7 @@
 /* eslint-disable hydrogen/prefer-image-component */
 import {Drawer, useDrawer} from '~/components/Drawer';
 import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
+import Footer from '~/components/Footer.jsx';
 import {Suspense, useEffect} from 'react';
 import {Await, Link, NavLink, useMatches, useFetchers} from '@remix-run/react';
 
@@ -28,20 +29,26 @@ export function Layout({children, title}) {
   }, [addToCartFetchers]);
 
   return (
-    <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
+    <div className="flex flex-col min-h-screen antialiased bg-offwhite-cashew p-6 md:p-12">
       <header
         role="banner"
-        className={`flex items-center h-16 p-6 md:p-8 lg:p-12 top-0 justify-between w-full leading-none gap-4 antialiased`}
+        className="flex items-center h-16 p-6 md:p-8 lg:p-12 top-0 justify-between w-full leading-none gap-4 border border-stone-500 bg-offwhite-cream"
       >
-        <Link to="/">
+        <img
+          className="h-5 w-5 inline md:hidden"
+          src="/build/hamburger.png"
+          alt={title}
+        />
+
+        <Link to="/" className="w-2/3 lg:w-2/5">
           <img
-            className="w-auto h-44 aspect-video"
+            className="h-16 lg:h-24 mx-auto lg:mx-0"
             src="/build/tpbglogo.png"
             alt={title}
           />
         </Link>
 
-        <div className="flex justify-evenly w-1/3 text-4xl font-amatic font-normal">
+        <div className="hidden md:flex justify-evenly w-1/3 text-md md:text-xl lg:text-3xl xl:text-4xl font-cormorant font-normal">
           <NavLink
             to="/"
             className={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
@@ -74,10 +81,15 @@ export function Layout({children, title}) {
       <main
         role="main"
         id="mainContent"
-        className="flex-grow p-6 md:p-8 lg:p-12"
+        className="flex-grow bg-offwhite-cashew w-full"
       >
-        {children}
+        <div className="bg-neutral-50 p-12 border border-stone-500">
+          {children}
+        </div>
       </main>
+      <footer role="contentinfo" className="bg-offwhite-cashew">
+        <Footer />
+      </footer>
       <Drawer open={isOpen} onClose={closeDrawer}>
         <CartDrawer cart={cart} close={closeDrawer} />
       </Drawer>

@@ -44,7 +44,7 @@ export const links = () => {
     },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cormorant+Garamond:wght@300;400;600;700&display=swap',
+      href: 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];

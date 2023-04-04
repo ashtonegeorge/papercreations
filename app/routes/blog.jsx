@@ -2,7 +2,6 @@
 /* eslint-disable hydrogen/prefer-image-component */
 import {useLoaderData, Link} from '@remix-run/react';
 import {defer} from '@shopify/remix-oxygen';
-import {Image} from '@shopify/hydrogen';
 
 export const meta = () => {
   return {
@@ -42,7 +41,7 @@ export default function Blog() {
       <main>
         <div>
           <section className="py-12">
-            <div className="grid grid-cols-3 gap-12 w-full h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 w-full h-full">
               {blogs.nodes.map((blog, index) => (
                 <div className="" key={blog.id}>
                   <div>
@@ -54,7 +53,7 @@ export default function Blog() {
                         alt={blog.title}
                         src={imagePaths[index]}
                         key={blog.id}
-                        className="relative"
+                        className="relative border border-stone-500"
                       />
                       <div>
                         <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy text-black text-2xl">
@@ -69,22 +68,21 @@ export default function Blog() {
             </div>
           </section>
           <section>
-            <h2 className="font-cormorant font-normal text-3xl pb-12 text-center">
+            <h2 className="font-cormorant font-bold text-4xl pb-12 text-center">
               Read the newest posts from Paper Creations
             </h2>
-            <div className="grid grid-cols-3 gap-12 w-full h-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full h-full">
               {articles.nodes.map((article) => (
-                <div className="" key={article.id}>
+                <div className="w-full md:w-3/4 mx-auto p-6" key={article.id}>
                   <div>
                     <Link
-                      to={`/blogs/${article.handle}`}
-                      className="w-3/4 h-full bg-stone-200"
+                      to={`/blogs/${article.blog.handle}/${article.handle}`}
                     >
                       <img
                         alt={article.title}
                         src={article.image.url}
                         key={article.id}
-                        className="relative"
+                        className="relative border border-stone-500"
                       />
                       <div>
                         <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy text-black text-2xl">
@@ -136,6 +134,9 @@ const RECENT_ARTICLES_QUERY = `#graphql
         content
         title
         excerpt
+        blog {
+          handle
+        }
         authorV2 {
           name
         }
