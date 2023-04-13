@@ -9,7 +9,7 @@ import {
 import {Seo} from '@shopify/hydrogen';
 import {ShopifyProvider} from '@shopify/hydrogen-react';
 import tailwind from './styles/tailwind-build.css';
-import favicon from '../public/favicon.svg';
+import favicon from '../public/favicon.ico';
 import {Layout} from './components/Layout';
 import {defer} from '@shopify/remix-oxygen';
 import {CART_QUERY} from '~/queries/cart';
@@ -44,7 +44,7 @@ export const links = () => {
     },
     {
       rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap',
+      href: 'https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Cormorant+Garamond:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700;800&display=swap',
     },
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
@@ -61,11 +61,13 @@ export async function loader({context, request}) {
   return defer({
     cart: cartId ? getCart(context, cartId) : undefined,
     layout: await context.storefront.query(LAYOUT_QUERY),
+    bannerMsg: await context.storefront.query(BANNER_QUERY),
   });
 }
 
 export default function App() {
   const data = useLoaderData();
+  const bannerMessage = data.bannerMsg.metaobject.field.value;
   const {name, description} = data.layout.shop;
 
   return (
@@ -77,7 +79,7 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <Layout title={name}>
+          <Layout title={name} bannerMsg={bannerMessage}>
             <Outlet />
           </Layout>
           <ScrollRestoration />
@@ -110,6 +112,19 @@ const LAYOUT_QUERY = `#graphql
     shop {
       name
       description
+    }
+  }
+`;
+
+const BANNER_QUERY = `#graphql
+  query BannerMessage {
+    metaobject(handle: {
+      type: "banner_message",
+      handle: "banner-text"
+    }) {
+      field(key: "content") {
+        value
+      }
     }
   }
 `;

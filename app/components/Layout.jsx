@@ -6,7 +6,7 @@ import Footer from '~/components/Footer.jsx';
 import {Suspense, useEffect} from 'react';
 import {Await, Link, NavLink, useMatches, useFetchers} from '@remix-run/react';
 
-export function Layout({children, title}) {
+export function Layout({children, title, bannerMsg}) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
   const fetchers = useFetchers();
   const [root] = useMatches();
@@ -29,65 +29,69 @@ export function Layout({children, title}) {
   }, [addToCartFetchers]);
 
   return (
-    <div className="flex flex-col min-h-screen antialiased bg-offwhite-cashew p-6 md:p-12">
-      <header
-        role="banner"
-        className="flex items-center h-16 p-6 md:p-8 lg:p-12 top-0 justify-between w-full leading-none gap-4 border border-stone-500 bg-offwhite-cream"
-      >
-        <img
-          className="h-5 w-5 inline md:hidden"
-          src="/build/hamburger.png"
-          alt={title}
-        />
-
-        <Link to="/" className="w-2/3 lg:w-2/5">
+    <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
+      <header role="banner" className="font-open">
+        <div className="text-center bg-palette-clay py-1">
+          <h2>{bannerMsg}</h2>
+        </div>
+        <div className="flex items-center h-16 p-6 md:p-8 lg:p-12 top-0 justify-between w-full leading-none gap-4">
           <img
-            className="h-16 lg:h-24 mx-auto lg:mx-0"
-            src="/build/tpbglogo.png"
+            className="h-5 w-5 inline md:hidden"
+            src="/build/hamburger.png"
             alt={title}
           />
-        </Link>
 
-        <div className="hidden md:flex justify-evenly w-1/3 text-md md:text-xl lg:text-3xl xl:text-4xl font-cormorant font-normal">
-          <NavLink
-            to="/"
-            className={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
-          >
-            shop
-          </NavLink>
-          <NavLink
-            to="/social"
-            className={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
-          >
-            social
-          </NavLink>
-          <NavLink
-            to="/visit"
-            className={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
-          >
-            visit
-          </NavLink>
-          <NavLink
-            to="/blog"
-            className={({isActive}) => (isActive ? activeStyle : inactiveStyle)}
-          >
-            blog
-          </NavLink>
-        </div>
-        <div className="">
-          <CartHeader cart={cart} openDrawer={openDrawer} />
+          <Link to="/" className="w-1/3 ">
+            <img
+              className="h-16 lg:h-24 mx-auto lg:mx-0"
+              src="/build/tpbglogo.png"
+              alt={title}
+            />
+          </Link>
+
+          <div className="hidden md:flex justify-evenly w-1/3 text-md md:text-xl lg:text-3xl xl:text-4xl font-cormorant font-normal">
+            <NavLink
+              to="/"
+              className={({isActive}) =>
+                isActive ? activeStyle : inactiveStyle
+              }
+            >
+              shop
+            </NavLink>
+            <NavLink
+              to="/social"
+              className={({isActive}) =>
+                isActive ? activeStyle : inactiveStyle
+              }
+            >
+              social
+            </NavLink>
+            <NavLink
+              to="/visit"
+              className={({isActive}) =>
+                isActive ? activeStyle : inactiveStyle
+              }
+            >
+              visit
+            </NavLink>
+            <NavLink
+              to="/blog"
+              className={({isActive}) =>
+                isActive ? activeStyle : inactiveStyle
+              }
+            >
+              blog
+            </NavLink>
+          </div>
+          <div className="">
+            <CartHeader cart={cart} openDrawer={openDrawer} />
+          </div>
         </div>
       </header>
-      <main
-        role="main"
-        id="mainContent"
-        className="flex-grow bg-offwhite-cashew w-full"
-      >
-        <div className="bg-neutral-50 p-12 border border-stone-500">
-          {children}
-        </div>
+      <main role="main" id="mainContent" className="flex-grow w-full">
+        <div className="">{children}</div>
       </main>
-      <footer role="contentinfo" className="bg-offwhite-cashew">
+      <footer role="contentinfo" className="">
         <Footer />
       </footer>
       <Drawer open={isOpen} onClose={closeDrawer}>
@@ -143,7 +147,7 @@ function CartDrawer({cart, close}) {
                     <CartLineItems linesObj={data.lines} />
                   </div>
                 </div>
-                <div className="w-full md:px-12 px-4 py-6 space-y-6 border border-1 border-gray-00">
+                <div className="w-full md:px-12 px-4 py-6 space-y-6">
                   <CartSummary cost={data.cost} />
                   <CartActions checkoutUrl={data.checkoutUrl} />
                 </div>

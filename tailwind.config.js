@@ -1,6 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./app/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './app/**/*.{js,ts,jsx,tsx}',
+    'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}',
+  ],
   theme: {
     extend: {
       fontFamily: {
@@ -9,15 +12,15 @@ module.exports = {
         open: ['Open Sans', 'sans-serif'],
       },
       colors: {
-        offwhite: {
-          nude: '#E2D4C2',
-          cream: '#F2EFE8',
-          cashew: '#E5E0D0',
-          gray: '#D3D4CC',
-          bone: '#E9E8E0',
+        palette: {
+          tea: '#CCD5AE',
+          bean: '#E9EDC9',
+          cream: '#FEFAE0',
+          sand: '#FAEDCD',
+          clay: '#D4A373',
         },
       },
     },
   },
-  plugins: [],
+  plugins: [require('flowbite/plugin')],
 };

@@ -2,6 +2,7 @@
 /* eslint-disable hydrogen/prefer-image-component */
 import {useLoaderData, Link} from '@remix-run/react';
 import {defer} from '@shopify/remix-oxygen';
+import moment from 'moment';
 
 export const meta = () => {
   return {
@@ -41,29 +42,22 @@ export default function Blog() {
       <main>
         <div>
           <section className="py-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 w-full h-full">
+            <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-3 items-center p-12">
               {blogs.nodes.map((blog, index) => (
-                <div className="" key={blog.id}>
-                  <div>
-                    <Link
-                      to={`/blogs/${blog.handle}`}
-                      className="w-full h-full bg-stone-200"
-                    >
-                      <img
-                        alt={blog.title}
-                        src={imagePaths[index]}
-                        key={blog.id}
-                        className="relative border border-stone-500"
-                      />
-                      <div>
-                        <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy text-black text-2xl">
-                          {blog.title}
-                        </h2>
-                        <h3>{blog.authors[0].name}</h3>
-                      </div>
-                    </Link>
+                <Link to={`/blogs/${blog.handle}`} key={blog.id}>
+                  <div
+                    className="grid border border-gray-200 rounded-lg shadow aspect-square bg-no-repeat bg-contain h-full"
+                    style={{
+                      backgroundImage: `url(${imagePaths[index]})`,
+                    }}
+                  >
+                    <div className="flex justify-evenly self-end p-4 bg-palette-sand bg-opacity-60">
+                      <h2 className="font-medium text-3xl text-center self-center font-open line-clamp-1">
+                        {blog.title}
+                      </h2>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </section>
@@ -71,26 +65,29 @@ export default function Blog() {
             <h2 className="font-cormorant font-bold text-4xl pb-12 text-center">
               Read the newest posts from Paper Creations
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full h-full">
+            <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-3 items-center p-12">
               {articles.nodes.map((article) => (
-                <div className="w-full md:w-3/4 mx-auto p-6" key={article.id}>
-                  <div>
-                    <Link
-                      to={`/blogs/${article.blog.handle}/${article.handle}`}
-                    >
-                      <img
-                        alt={article.title}
-                        src={article.image.url}
-                        key={article.id}
-                        className="relative border border-stone-500"
-                      />
-                      <div>
-                        <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy text-black text-2xl">
-                          {article.title}
-                        </h2>
-                        <h3>{article.authorV2.name}</h3>
-                      </div>
-                    </Link>
+                <div
+                  className="grid border border-gray-200 rounded-lg shadow aspect-square bg-no-repeat bg-cover h-full"
+                  key={article.id}
+                  style={{
+                    backgroundImage: `url(${article.image.url})`,
+                  }}
+                >
+                  <div className="bg-palette-tea bg-opacity-80 rounded-b-lg block mt-auto">
+                    <div className="flex w-full justify-center self-end">
+                      <h5 className="font-bold lg:w-80 text-lg text-center self-center font-open truncate">
+                        {article.title}
+                      </h5>
+                    </div>
+                    <div className="flex w-full justify-center self-end text-sm">
+                      <h5 className="text-center self-center font-open truncate px-2">
+                        {article.authorV2.name}
+                      </h5>
+                      <h5 className="text-center self-center font-open truncate px-2">
+                        {moment(article.publishedAt).format('MMMM Do, YYYY')}
+                      </h5>
+                    </div>
                   </div>
                 </div>
               ))}
@@ -134,6 +131,7 @@ const RECENT_ARTICLES_QUERY = `#graphql
         content
         title
         excerpt
+        publishedAt
         blog {
           handle
         }
@@ -147,3 +145,5 @@ const RECENT_ARTICLES_QUERY = `#graphql
     }
   }
 `;
+
+// AIzaSyAzCO09mhvJvZAApcA_-Y5oxrrGLVRwe7Q
