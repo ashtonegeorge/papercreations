@@ -45,24 +45,14 @@ export const meta = ({data}) => {
 export default function Blog() {
   const {blog} = useLoaderData();
   return (
-    <>
+    <main className="px-12 pb-12">
       <header className="grid w-full gap-8 py-8 justify-items-start">
-        <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
+        <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block justify-self-center">
           {blog.title}
         </h1>
-
-        {/* {collection.description && (
-          <div className="flex items-baseline justify-between w-full">
-            <div>
-              <p className="max-w-md whitespace-pre-wrap inherit text-copy inline-block">
-                {blog.authors.name}
-              </p>
-            </div>
-          </div>
-        )} */}
       </header>
       <ArticleGrid blog={blog} url={`/blogs/${blog.handle}`} />
-    </>
+    </main>
   );
 }
 

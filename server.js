@@ -77,8 +77,8 @@ export default {
  * swap out the cookie-based implementation with something else!
  */
 class HydrogenSession {
-  sessionStorage;
-  session;
+  sessionStorage
+  session
   constructor(sessionStorage, session) {
     this.sessionStorage = sessionStorage;
     this.session = session;

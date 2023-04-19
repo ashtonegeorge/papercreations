@@ -2,6 +2,7 @@
 /* eslint-disable hydrogen/prefer-image-component */
 import {useFetcher, Link} from '@remix-run/react';
 import {useEffect, useState} from 'react';
+import moment from 'moment';
 
 export default function Blog({blog, url}) {
   const [nextPage, setNextPage] = useState(blog.articles.pageInfo.hasNextPage);
@@ -29,25 +30,36 @@ export default function Blog({blog, url}) {
 
   return (
     <>
-      <main>
-        <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <section>
+        <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-16 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
           {articles.map((article) => (
-            <div key={article.title}>
-              <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
-                <img
-                  alt={article.title}
-                  src={article.image.url}
-                  key={article.id}
-                  className="relative"
-                />
-                <div>
-                  <h2 className="whitespace-pre-wrap max-w-prose font-medium text-copy text-black text-2xl">
-                    {article.title}
-                  </h2>
-                  <h3>{article.authorV2.name}</h3>
+            <Link
+              key={article.id}
+              to={`/blogs/${article.blog.handle}/${article.handle}`}
+            >
+              <div
+                className="grid sm:w-42 w-64 rounded-lg shadow aspect-square bg-no-repeat bg-cover h-full mx-auto"
+                style={{
+                  backgroundImage: `url(${article.image.url})`,
+                }}
+              >
+                <div className="bg-palette-tea sm:w-42 w-64 bg-opacity-80 rounded-b-lg block mt-auto">
+                  <div className="flex justify-center self-end">
+                    <h5 className="font-bold sm:w-42 w-64 text-md text-center self-center font-open truncate px-2">
+                      {article.title}
+                    </h5>
+                  </div>
+                  <div className="flex w-full justify-center self-end text-sm">
+                    <h5 className="text-center self-center font-open truncate px-2">
+                      {article.authorV2.name}
+                    </h5>
+                    <h5 className="text-center self-center font-open truncate px-2">
+                      {moment(article.publishedAt).format('MMMM Do, YYYY')}
+                    </h5>
+                  </div>
                 </div>
-              </Link>
-            </div>
+              </div>
+            </Link>
           ))}
         </div>
 
@@ -62,7 +74,7 @@ export default function Blog({blog, url}) {
             </button>
           </div>
         )}
-      </main>
+      </section>
     </>
   );
 }

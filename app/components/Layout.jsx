@@ -5,6 +5,7 @@ import {CartLineItems, CartActions, CartSummary} from '~/components/Cart';
 import Footer from '~/components/Footer.jsx';
 import {Suspense, useEffect} from 'react';
 import {Await, Link, NavLink, useMatches, useFetchers} from '@remix-run/react';
+import 'flowbite';
 
 export function Layout({children, title, bannerMsg}) {
   const {isOpen, openDrawer, closeDrawer} = useDrawer();
@@ -22,6 +23,11 @@ export function Layout({children, title, bannerMsg}) {
 
   const inactiveStyle = 'font-normal';
 
+  const activeStyleSmall =
+    'block font-bold py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0';
+
+  const inactiveStyleSmall =
+    'block font-normal py-2 pl-3 pr-4 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0';
   // When the fetchers array changes, open the drawer if there is an add to cart action
   useEffect(() => {
     if (isOpen || addToCartFetchers.length === 0) return;
@@ -31,19 +37,36 @@ export function Layout({children, title, bannerMsg}) {
   return (
     <div className="flex flex-col min-h-screen antialiased bg-neutral-50">
       <header role="banner" className="font-open">
-        <div className="text-center bg-palette-clay py-1">
+        <div className="text-center bg-palette-clay py-1 px-4 text-xs md:text-md lg:text-lg">
           <h2>{bannerMsg}</h2>
         </div>
         <div className="flex items-center h-16 p-6 md:p-8 lg:p-12 top-0 justify-between w-full leading-none gap-4">
-          <img
-            className="h-5 w-5 inline md:hidden"
-            src="/build/hamburger.png"
-            alt={title}
-          />
+          <button
+            data-collapse-toggle="navbar-default"
+            type="button"
+            className="inline-flex md:hidden items-center text-sm text-gray-500 rounded-lg"
+            aria-controls="navbar-default"
+            aria-expanded="false"
+          >
+            <span className="sr-only">Open main menu</span>
+            <svg
+              className="w-6 h-6"
+              aria-hidden="true"
+              fill="black"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fillRule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clipRule="evenodd"
+              ></path>
+            </svg>
+          </button>
 
           <Link to="/" className="w-1/3 ">
             <img
-              className="h-16 lg:h-24 mx-auto lg:mx-0"
+              className="h-8 md:h-12 lg:h-24 mx-auto lg:mx-0 aspect-[16/4] md:aspect-auto"
               src="/build/tpbglogo.png"
               alt={title}
             />
@@ -87,9 +110,60 @@ export function Layout({children, title, bannerMsg}) {
             <CartHeader cart={cart} openDrawer={openDrawer} />
           </div>
         </div>
+        <div
+          className="hidden absolute z-99 w-full md:hidden md:w-auto"
+          id="navbar-default"
+        >
+          <ul className="font-medium flex flex-col p-4 md:p-0 border border-gray-100 bg-gray-50 divide-y divide-neutral-400">
+            <li>
+              <NavLink
+                to="/"
+                className={({isActive}) =>
+                  isActive ? activeStyleSmall : inactiveStyleSmall
+                }
+              >
+                shop
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/social"
+                className={({isActive}) =>
+                  isActive ? activeStyleSmall : inactiveStyleSmall
+                }
+              >
+                social
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/visit"
+                className={({isActive}) =>
+                  isActive ? activeStyleSmall : inactiveStyleSmall
+                }
+              >
+                visit
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/blog"
+                className={({isActive}) =>
+                  isActive ? activeStyleSmall : inactiveStyleSmall
+                }
+              >
+                blog
+              </NavLink>
+            </li>
+          </ul>
+        </div>
       </header>
-      <main role="main" id="mainContent" className="flex-grow w-full">
-        <div className="">{children}</div>
+      <main
+        role="main"
+        id="mainContent"
+        className="flex-grow w-full lg:bg-palette-tea"
+      >
+        <div className="max-w-5xl mx-auto bg-neutral-50">{children}</div>
       </main>
       <footer role="contentinfo" className="">
         <Footer />

@@ -31,18 +31,18 @@ export default function Blog() {
   return (
     <div className="w-full h-full">
       <header>
-        <h1 className="font-cormorant font-bold text-center text-5xl pb-4">
+        <h1 className="font-cormorant font-bold text-center text-3xl md:text-5xl pb-3">
           Welcome to the blog section!
         </h1>
-        <h2 className="font-cormorant font-normal text-3xl mx-auto w-2/3">
+        <h2 className="font-cormorant font-normal text-xl md:text-3xl mx-auto w-2/3">
           Here, you can learn about the exciting things happening at Paper
           Creations from a variety of subjects and articles.
         </h2>
       </header>
       <main>
         <div>
-          <section className="py-12">
-            <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-3 items-center p-12">
+          <section className="py-6 md:py-12">
+            <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-3 items-center px-12 py-6 md:p-12">
               {blogs.nodes.map((blog, index) => (
                 <Link to={`/blogs/${blog.handle}`} key={blog.id}>
                   <div
@@ -62,34 +62,38 @@ export default function Blog() {
             </div>
           </section>
           <section>
-            <h2 className="font-cormorant font-bold text-4xl pb-12 text-center">
+            <h2 className="font-cormorant font-bold text-3xl md:pb-12 px-6 md:px-0 text-center">
               Read the newest posts from Paper Creations
             </h2>
-            <div className="grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-3 items-center p-12">
+            <div className="w-full md:w-3/4 lg:w-auto max-w-4xl mx-auto grid-flow-row grid gap-2 gap-y-6 md:gap-4 lg:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center p-12">
               {articles.nodes.map((article) => (
-                <div
-                  className="grid border border-gray-200 rounded-lg shadow aspect-square bg-no-repeat bg-cover h-full"
+                <Link
                   key={article.id}
-                  style={{
-                    backgroundImage: `url(${article.image.url})`,
-                  }}
+                  to={`/blogs/${article.blog.handle}/${article.handle}`}
                 >
-                  <div className="bg-palette-tea bg-opacity-80 rounded-b-lg block mt-auto">
-                    <div className="flex w-full justify-center self-end">
-                      <h5 className="font-bold lg:w-80 text-lg text-center self-center font-open truncate">
-                        {article.title}
-                      </h5>
-                    </div>
-                    <div className="flex w-full justify-center self-end text-sm">
-                      <h5 className="text-center self-center font-open truncate px-2">
-                        {article.authorV2.name}
-                      </h5>
-                      <h5 className="text-center self-center font-open truncate px-2">
-                        {moment(article.publishedAt).format('MMMM Do, YYYY')}
-                      </h5>
+                  <div
+                    className="grid sm:w-42 w-64 rounded-lg shadow aspect-square bg-no-repeat bg-cover h-full mx-auto"
+                    style={{
+                      backgroundImage: `url(${article.image.url})`,
+                    }}
+                  >
+                    <div className="bg-palette-tea sm:w-42 w-64 bg-opacity-80 rounded-b-lg block mt-auto">
+                      <div className="flex justify-center self-end">
+                        <h5 className="font-bold sm:w-42 w-64 text-md text-center self-center font-open truncate px-2">
+                          {article.title}
+                        </h5>
+                      </div>
+                      <div className="flex w-full justify-center self-end text-sm">
+                        <h5 className="text-center self-center font-open truncate px-2">
+                          {article.authorV2.name}
+                        </h5>
+                        <h5 className="text-center self-center font-open truncate px-2">
+                          {moment(article.publishedAt).format('MMMM Do, YYYY')}
+                        </h5>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </section>
@@ -145,5 +149,3 @@ const RECENT_ARTICLES_QUERY = `#graphql
     }
   }
 `;
-
-// AIzaSyAzCO09mhvJvZAApcA_-Y5oxrrGLVRwe7Q

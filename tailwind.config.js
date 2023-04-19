@@ -13,11 +13,14 @@ module.exports = {
       },
       colors: {
         palette: {
+          forest: '#283618',
+          army: '#606C38',
           tea: '#CCD5AE',
           bean: '#E9EDC9',
           cream: '#FEFAE0',
           sand: '#FAEDCD',
           clay: '#D4A373',
+          burnt: '#BC6C25',
         },
       },
     },

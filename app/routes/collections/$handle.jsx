@@ -46,7 +46,7 @@ export default function Collection() {
   const {collection} = useLoaderData();
   return (
     <>
-      <header className="grid w-full gap-8 py-8 justify-items-start">
+      <header className="grid w-full gap-8 py-8 justify-items-start p-12">
         <h1 className="text-4xl whitespace-pre-wrap font-bold inline-block">
           {collection.title}
         </h1>
@@ -61,10 +61,12 @@ export default function Collection() {
           </div>
         )}
       </header>
-      <ProductGrid
-        collection={collection}
-        url={`/collections/${collection.handle}`}
-      />
+      <div className="p-12">
+        <ProductGrid
+          collection={collection}
+          url={`/collections/${collection.handle}`}
+        />
+      </div>
     </>
   );
 }
@@ -86,6 +88,9 @@ const COLLECTION_QUERY = `#graphql
           title
           publishedAt
           handle
+          featuredImage {
+            url
+          }
           variants(first: 1) {
             nodes {
               id

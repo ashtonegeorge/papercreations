@@ -38,14 +38,14 @@ export default function ProductHandle() {
   const orderable = selectedVariant?.availableForSale || false;
 
   return (
-    <section className="w-full gap-4 md:gap-8 grid px-6 md:px-8 lg:px-12">
-      <div className="grid items-start gap-6 lg:gap-20 md:grid-cols-2 lg:grid-cols-3">
-        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full lg:col-span-2">
-          <div className="md:col-span-2 snap-center card-image aspect-square md:w-full w-[80vw] shadow rounded">
+    <section className="w-full max-w-6xl gap-4 md:gap-8 grid font-open overflow-x-hidden">
+      <div className="grid items-start gap-6 lg:gap-6 md:grid-cols-2">
+        <div className="grid md:grid-flow-row  md:p-0 md:overflow-x-hidden md:grid-cols-2 md:w-full">
+          <div className="md:col-span-2 snap-center card-image aspect-square md:w-full w-full shadow rounded">
             <ProductGallery media={product.media.nodes} />
           </div>
         </div>
-        <div className="md:sticky md:mx-auto max-w-xl md:max-w-[24rem] grid gap-8 p-0 md:p-6 md:px-0 top-[6rem] lg:top-[8rem] xl:top-[10rem]">
+        <div className="md:sticky md:mx-auto grid gap-8 top-[6rem] lg:top-[8rem] lg:pb-12 px-12 lg:px-0">
           <div className="grid gap-2">
             <h1 className="text-4xl font-bold leading-10 whitespace-normal">
               {product.title}
@@ -64,16 +64,16 @@ export default function ProductHandle() {
             className="text-xl font-semibold mb-2"
           />
           {orderable && (
-            <div className="space-y-2">
+            <div className="space-y-2 w-[300px] lg:w-[262px]">
               <ShopPayButton
                 variantIds={[selectedVariant?.id]}
-                width={'400px'}
+                className="w-[300px] lg:w-[262px]"
               />
               <ProductForm variantId={selectedVariant?.id} />
             </div>
           )}
           <div
-            className="prose border-t border-gray-200 pt-6 text-black text-md"
+            className="prose border-t border-gray-200 pt-6 text-black text-md w-[350px] mx-auto"
             dangerouslySetInnerHTML={{__html: product.descriptionHtml}}
           ></div>
         </div>
@@ -124,12 +124,12 @@ function ProductGallery({media}) {
           <div
             className={`${
               i % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
-            } snap-center card-image bg-white aspect-square md:w-full w-[80vw] shadow-sm rounded`}
+            } snap-center card-image bg-white aspect-[3/2] md:w-full w-[80vw] my-auto shadow-sm rounded`}
             key={data.id || data.image.id}
           >
             <MediaFile
               tabIndex="0"
-              className={`h-[70vh] w-auto mx-auto`}
+              className={`w-auto mx-auto`}
               data={data}
               {...extraProps}
             />
@@ -156,7 +156,7 @@ function ProductForm({variantId}) {
         value={selectedLocale?.country ?? 'US'}
       />
       <input type="hidden" name="lines" value={JSON.stringify(lines)} />
-      <button className="bg-black text-white px-6 py-3 w-full rounded-md text-center font-medium max-w-[400px]">
+      <button className="bg-black text-white px-6 py-3 w-full rounded-lg text-center font-medium max-w-[262px]">
         Add to Bag
       </button>
     </fetcher.Form>
