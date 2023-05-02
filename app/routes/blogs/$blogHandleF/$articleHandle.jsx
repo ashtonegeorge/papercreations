@@ -46,14 +46,6 @@ export default function Article() {
   const {response} = useLoaderData();
   const article = response.blog.articleByHandle;
 
-  const textAreaRef = useRef(null);
-
-  function handleCopy() {
-    textAreaRef.current.select();
-    document.execCommand('copy');
-    console.log('Text copied to clipboard');
-  }
-
   return (
     <>
       <header className="w-full gap-8 py-8 justify-items-start font-open border-b mb-12">
@@ -77,7 +69,10 @@ export default function Article() {
           value={`https://www.facebook.com/papercreationsbystacey`}
           readOnly
         />
-        <button className="flex justify-center" onClick={handleCopy}>
+        <button
+          className="flex justify-self-center mx-auto"
+          onClick={handleCopy}
+        >
           <h2 className="my-auto pr-2">Share this post!</h2>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -102,7 +102,7 @@ export default function Index() {
                   <Money
                     withoutTrailingZeros
                     data={product.priceRange.minVariantPrice}
-                    className="font-medium text-md text-neutral-400 text-center self-center font-open line-clamp-1"
+                    className="font-medium text-md text-neutral-700 text-center self-center font-open line-clamp-1"
                   />
                 </div>
               </div>

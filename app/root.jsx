@@ -79,6 +79,12 @@ export default function App() {
           <Seo />
           <Meta />
           <Links />
+          <script
+            async
+            defer
+            crossOrigin="anonymous"
+            src="https://connect.facebook.net/en_US/sdk.js"
+          ></script>
         </head>
         <body>
           <Layout title={name} bannerMsg={bannerMessage}>

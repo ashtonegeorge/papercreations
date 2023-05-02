@@ -78,7 +78,7 @@ export default function Blog() {
                     }}
                   >
                     <div className="bg-palette-tea sm:w-42 w-64 bg-opacity-80 rounded-b-lg block mt-auto">
-                      <div className="flex justify-center self-end">
+                      <div className="flex justify-center sm:w-42 w-64 self-end">
                         <h5 className="font-bold sm:w-42 w-64 text-md text-center self-center font-open truncate px-2">
                           {article.title}
                         </h5>
