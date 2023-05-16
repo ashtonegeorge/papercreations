@@ -1,6 +1,5 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable hydrogen/prefer-image-component */
-import {useRef} from 'react';
 import {useLoaderData} from '@remix-run/react';
 import {json} from '@shopify/remix-oxygen';
 import moment from 'moment';
@@ -62,28 +61,6 @@ export default function Article() {
           alt={article.title}
           className="mx-auto w-2/5 my-3 border border-neutral-200 shadow-lg rounded-lg"
         />
-
-        <textarea
-          className="invisible"
-          ref={textAreaRef}
-          value={`https://www.facebook.com/papercreationsbystacey`}
-          readOnly
-        />
-        <button
-          className="flex justify-self-center mx-auto"
-          onClick={handleCopy}
-        >
-          <h2 className="my-auto pr-2">Share this post!</h2>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 96 960 960"
-            width="24"
-            className="fill-neutral-400 hover:fill-sky-400 transition ease duration-400"
-          >
-            <path d="M220 1016q-24 0-42-18t-18-42V447q0-24 18-42t42-18h169v60H220v509h520V447H569v-60h171q24 0 42 18t18 42v509q0 24-18 42t-42 18H220Zm229-307V252l-88 88-43-43 161-161 161 161-43 43-88-88v457h-60Z" />
-          </svg>
-        </button>
       </header>
       <main className="w-5/8 mx-auto font-open px-12 pb-12">
         <p>{article.excerpt}</p>

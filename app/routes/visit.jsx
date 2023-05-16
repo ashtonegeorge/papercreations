@@ -1,6 +1,6 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable hydrogen/prefer-image-component */
-import {useLoadScript, GoogleMap, Marker} from '@react-google-maps/api';
+import {useLoadScript, GoogleMap} from '@react-google-maps/api';
 import {useLoaderData, Link} from '@remix-run/react';
 
 export async function loader({context}) {
@@ -15,7 +15,7 @@ export default function Visit() {
     googleMapsApiKey: mapsKey,
   });
 
-  if (!isLoaded) return <div>loading...</div>;
+  if (!isLoaded) return <div className="w-full h-[100vh]">loading...</div>;
 
   return (
     <main className="block w-full pb-6" id="map">
@@ -48,9 +48,11 @@ export default function Visit() {
             </h2>
             <Link
               to="https://goo.gl/maps/D51YN9qsBfGMXgBd8"
-              className="hover:text-white hover:bg-palette-tea bg-palette-bean text-black transition ease rounded-lg shadow-lg text-sm w-full px-5 py-2.5 text-center"
+              className="flex  w-full  text-center justify-center"
             >
-              Directions
+              <h2 className="hover:text-white hover:bg-palette-tea bg-palette-bean text-black transition ease rounded-lg shadow-lg text-sm w-1/2 px-5 py-2.5">
+                Directions
+              </h2>
             </Link>
           </div>
         </div>
